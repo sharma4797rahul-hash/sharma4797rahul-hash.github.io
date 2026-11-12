@@ -89,8 +89,8 @@ function speakChinese(text) {
   const voices = window.speechSynthesis.getVoices();
   const zhVoice = voices.find(v => v.lang.toLowerCase().replace('_','-').startsWith('zh-cn')) ||
                   voices.find(v => v.lang.toLowerCase().startsWith('zh'));
-  if (zhVoice) utter.voice = zhVoice;
-  utter.onend = () => setStatus('Done. Speak or type again anytime.');
+  if (zhVoice) utter.voice = zhVoice
+  utter.onend = () => startListening.();
   utter.onerror = () => setStatus('Could not play Chinese voice. Check that a Chinese voice is installed in your phone settings.');
   window.speechSynthesis.speak(utter);
 }
