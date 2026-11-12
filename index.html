@@ -4,17 +4,18 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="theme-color" content="#090909">
-<title>VALORANT // Voice Translator</title>
+<title>Pink Valorant Translator</title>
 
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Orbitron:wght@500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700;800&family=Poppins:wght@400;500;600;700&display=swap');
 
 :root {
-  --red: #ff4655;
-  --dark: #090909;
-  --panel: rgba(20, 20, 23, .91);
-  --muted: #929292;
+  --pink: #ff45b9;
+  --light-pink: #ff9cde;
+  --purple: #a875ff;
+  --bg: #10091d;
+  --panel: #1b1230;
+  --white: #fff2fc;
 }
 
 * {
@@ -24,631 +25,675 @@
 body {
   margin: 0;
   min-height: 100vh;
+  color: var(--white);
+  font-family: Poppins, sans-serif;
   background:
-    radial-gradient(ellipse at 80% 10%, rgba(255,70,85,.17), transparent 40%),
-    radial-gradient(ellipse at 10% 90%, rgba(255,70,85,.10), transparent 35%),
-    #090909;
-  color: white;
-  font-family: 'Rajdhani', sans-serif;
+    radial-gradient(circle at 15% 15%, #64265c 0, transparent 35%),
+    radial-gradient(circle at 85% 80%, #42236e 0, transparent 35%),
+    var(--bg);
   overflow-x: hidden;
 }
 
-/* Animated background */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  opacity: .12;
+  opacity: .18;
   background-image:
-    linear-gradient(rgba(255,255,255,.08) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,.08) 1px, transparent 1px);
-  background-size: 45px 45px;
-  mask-image: linear-gradient(to bottom, black, transparent);
+    linear-gradient(#ff70ce22 1px, transparent 1px),
+    linear-gradient(90deg, #ff70ce22 1px, transparent 1px);
+  background-size: 38px 38px;
 }
 
-body::after {
-  content: "";
-  position: fixed;
-  width: 350px;
-  height: 350px;
-  border: 1px solid rgba(255,70,85,.18);
-  border-radius: 50%;
-  top: 15%;
-  right: -180px;
-  box-shadow: 0 0 80px rgba(255,70,85,.12);
-  animation: float 8s ease-in-out infinite alternate;
-  pointer-events: none;
-}
-
-@keyframes float {
-  from { transform: translateY(-20px) rotate(0deg); }
-  to { transform: translateY(35px) rotate(35deg); }
-}
-
-.container {
-  width: min(760px, 92%);
+.app {
+  width: min(1100px, 95%);
   margin: auto;
-  padding: 28px 0 40px;
+  padding: 28px 0 35px;
   position: relative;
   z-index: 1;
 }
 
-.topbar {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  border-bottom: 1px solid rgba(255,70,85,.45);
-  padding-bottom: 15px;
-  margin-bottom: 30px;
+header {
+  text-align: center;
+  margin-bottom: 25px;
 }
 
 .logo {
-  font-family: 'Orbitron', sans-serif;
+  font-family: Orbitron, sans-serif;
+  font-size: clamp(25px, 5vw, 43px);
   font-weight: 800;
-  letter-spacing: 3px;
-  font-size: 19px;
+  letter-spacing: 4px;
+  color: var(--pink);
+  text-shadow: 0 0 15px #ff45b988;
 }
 
-.logo span {
-  color: var(--red);
+.subtitle {
+  font-size: 11px;
+  letter-spacing: 5px;
+  color: #d7a6f5;
+  margin-top: 5px;
 }
 
-.top-label {
-  color: var(--red);
-  font-size: 12px;
-  letter-spacing: 2px;
-}
-
-.hero {
-  text-align: center;
-  margin-bottom: 30px;
-}
-
-.hero h1 {
-  font-family: 'Orbitron', sans-serif;
-  font-size: clamp(25px, 6vw, 39px);
-  letter-spacing: 2px;
-  margin: 0;
-}
-
-.hero h1 span {
-  color: var(--red);
-}
-
-.hero p {
-  color: var(--muted);
-  letter-spacing: 2px;
-  font-size: 13px;
-}
-
-.status {
+.top-controls {
   display: flex;
   align-items: center;
   justify-content: center;
-  gap: 9px;
-  color: #bbb;
-  font-size: 14px;
-  margin: 22px 0;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-bottom: 25px;
 }
 
-.status-dot {
-  height: 9px;
-  width: 9px;
-  background: #777;
-  border-radius: 50%;
+select, .swap {
+  color: white;
+  background: #241533;
+  border: 1px solid var(--pink);
+  border-radius: 30px;
+  padding: 12px 17px;
+  font: 600 13px Poppins, sans-serif;
+  outline: none;
+  box-shadow: 0 0 12px #ff45b933;
 }
 
-.status.active .status-dot {
-  background: #50ff9b;
-  box-shadow: 0 0 12px #50ff9b;
-  animation: blink 1s infinite;
+select {
+  max-width: 190px;
 }
 
-@keyframes blink {
-  50% { opacity: .35; }
+select option {
+  background: #241533;
+}
+
+.swap {
+  width: 45px;
+  height: 45px;
+  padding: 0;
+  font-size: 23px;
+  cursor: pointer;
+  transition: .3s;
+}
+
+.swap:hover {
+  transform: rotate(180deg);
+  background: var(--pink);
+}
+
+.translations {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
 }
 
 .panel {
+  min-height: 285px;
+  border: 2px solid var(--pink);
+  border-radius: 24px;
+  background: linear-gradient(145deg, #291a43dd, #130d25ee);
+  box-shadow: 0 0 20px #ff45b933;
+  overflow: hidden;
   position: relative;
-  background: var(--panel);
-  border: 1px solid rgba(255,255,255,.09);
-  padding: 20px;
-  margin: 17px 0;
-  clip-path: polygon(
-    0 0, calc(100% - 16px) 0, 100% 16px,
-    100% 100%, 16px 100%, 0 calc(100% - 16px)
-  );
-  box-shadow: 0 8px 30px rgba(0,0,0,.3);
-}
-
-.panel::before {
-  content: "";
-  position: absolute;
-  left: 0;
-  top: 0;
-  height: 2px;
-  width: 65px;
-  background: var(--red);
 }
 
 .panel-title {
-  color: var(--red);
-  font-family: 'Orbitron', sans-serif;
-  font-size: 12px;
-  letter-spacing: 2px;
-  margin-bottom: 13px;
+  padding: 15px 20px;
+  font-weight: 700;
+  border-bottom: 1px solid #ff45b955;
+  color: var(--light-pink);
+  letter-spacing: 1px;
 }
 
-.result {
-  min-height: 55px;
-  font-size: 21px;
-  line-height: 1.5;
+.output {
+  padding: 25px 22px;
+  font-size: 19px;
+  line-height: 1.7;
+  min-height: 220px;
   overflow-wrap: anywhere;
+  white-space: pre-wrap;
 }
 
-.chinese {
-  font-size: 25px;
-  color: #fff;
+.output:empty::before {
+  content: "—";
+  color: #9b80b1;
 }
 
 .controls {
   display: flex;
-  flex-wrap: wrap;
   justify-content: center;
-  gap: 13px;
-  margin: 25px 0;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 22px;
+  margin: 28px 0 20px;
 }
 
-button {
-  border: 1px solid var(--red);
-  background: var(--red);
-  color: white;
-  padding: 13px 22px;
-  font-family: 'Orbitron', sans-serif;
-  font-size: 11px;
-  letter-spacing: 1px;
-  cursor: pointer;
-  transition: .25s;
-  clip-path: polygon(
-    0 0, calc(100% - 12px) 0, 100% 12px,
-    100% 100%, 12px 100%, 0 calc(100% - 12px)
-  );
-}
-
-button:hover {
-  background: transparent;
-  box-shadow: 0 0 18px rgba(255,70,85,.4);
-  transform: translateY(-2px);
-}
-
-button.secondary {
-  background: transparent;
-  color: var(--red);
-}
-
-button.secondary:hover {
-  background: var(--red);
-  color: white;
-}
-
-button:disabled {
-  opacity: .45;
-  cursor: not-allowed;
-  transform: none;
-}
-
-.mic-button {
-  width: 105px;
-  height: 105px;
+.circle {
+  width: 76px;
+  height: 76px;
   border-radius: 50%;
-  clip-path: none;
-  font-size: 32px;
-  padding: 0;
-  box-shadow: 0 0 25px rgba(255,70,85,.25);
+  border: 2px solid var(--pink);
+  background: radial-gradient(circle, #48204e, #1a102c);
+  color: white;
+  font-size: 25px;
+  cursor: pointer;
+  box-shadow: 0 0 15px #ff45b955;
+  transition: .25s;
+  position: relative;
 }
 
-.mic-button.listening {
+.circle:hover {
+  transform: translateY(-5px) scale(1.06);
+  background: var(--pink);
+  box-shadow: 0 0 25px var(--pink);
+}
+
+.circle.active {
+  background: var(--pink);
   animation: pulse 1.4s infinite;
 }
 
+.mic {
+  width: 105px;
+  height: 105px;
+  font-size: 38px;
+  border-width: 3px;
+  background: radial-gradient(circle, #ff72d0, #8d2ab7);
+  box-shadow: 0 0 30px #ff45b9aa;
+}
+
 @keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(255,70,85,.65); }
-  70% { box-shadow: 0 0 0 22px rgba(255,70,85,0); }
-  100% { box-shadow: 0 0 0 0 rgba(255,70,85,0); }
+  0%, 100% { box-shadow: 0 0 12px var(--pink); }
+  50% { box-shadow: 0 0 35px var(--pink); }
 }
 
-.input-area {
-  display: flex;
-  gap: 9px;
-}
-
-input {
-  min-width: 0;
-  flex: 1;
-  padding: 14px;
-  background: #111;
-  border: 1px solid #393939;
-  color: white;
-  font-family: 'Rajdhani', sans-serif;
-  font-size: 17px;
-  outline: none;
-}
-
-input:focus {
-  border-color: var(--red);
-}
-
-.footer {
+.button-label {
   text-align: center;
-  color: #666;
+  font-size: 11px;
+  margin-top: 7px;
+  color: #e7c6fa;
+}
+
+.status {
+  text-align: center;
+  color: #ff9cde;
   font-size: 12px;
-  letter-spacing: 2px;
-  margin-top: 35px;
+  min-height: 20px;
+  margin-top: 15px;
 }
 
-.small-note {
-  color: #777;
-  text-align: center;
-  font-size: 13px;
+.cat {
+  position: fixed;
+  font-size: 36px;
+  z-index: 0;
+  pointer-events: none;
+  animation: walk 18s linear infinite;
+  filter: drop-shadow(0 0 8px #ff72d0);
 }
 
-@media(max-width: 480px) {
-  .container { padding-top: 18px; }
-  .panel { padding: 16px; }
-  .input-area { flex-direction: column; }
-  .input-area button { width: 100%; }
-  .controls button:not(.mic-button) { padding: 12px 14px; }
+.cat.one {
+  bottom: 8px;
+  left: -60px;
+}
+
+.cat.two {
+  top: 16%;
+  right: -60px;
+  animation-delay: -9s;
+}
+
+@keyframes walk {
+  0% { transform: translateX(0) translateY(0); }
+  25% { transform: translateX(25vw) translateY(-8px); }
+  50% { transform: translateX(50vw) translateY(0); }
+  75% { transform: translateX(75vw) translateY(-8px); }
+  100% { transform: translateX(110vw) translateY(0); }
+}
+
+.petal {
+  position: fixed;
+  top: -30px;
+  color: #ff79cf;
+  pointer-events: none;
+  animation: fall 9s linear infinite;
+  opacity: .7;
+  z-index: 0;
+}
+
+@keyframes fall {
+  to {
+    transform: translateY(110vh) rotate(600deg);
+  }
+}
+
+@media(max-width: 650px) {
+  .app { padding-top: 20px; }
+  .translations {
+    grid-template-columns: 1fr;
+    gap: 15px;
+  }
+  .panel { min-height: 210px; }
+  .output { min-height: 145px; font-size: 17px; }
+  .circle { width: 62px; height: 62px; font-size: 21px; }
+  .mic { width: 85px; height: 85px; font-size: 32px; }
+  .controls { gap: 16px; }
+  .subtitle { letter-spacing: 3px; }
 }
 </style>
 </head>
 
 <body>
-<div class="container">
 
-  <header class="topbar">
-    <div class="logo">V<span>//</span>TRANSLATE</div>
-    <div class="top-label">VOICE SYSTEM 01</div>
-  </header>
+<div class="cat one">🐈</div>
+<div class="cat two">🐈‍⬛</div>
 
-  <section class="hero">
-    <h1>BREAK THE <span>LANGUAGE</span></h1>
-    <p>ENGLISH → CHINESE COMMUNICATION</p>
-  </section>
+<div class="app">
 
-  <div class="status" id="status">
-    <span class="status-dot"></span>
-    <span id="statusText">SYSTEM STANDBY</span>
-  </div>
+<header>
+  <div class="logo">VALORANT</div>
+  <div class="subtitle">VOICE TRANSLATOR</div>
+</header>
 
-  <section class="panel">
-    <div class="panel-title">01 // ENGLISH INPUT</div>
-    <div class="result" id="englishText">
-      Waiting for your voice...
-    </div>
-  </section>
+<div class="top-controls">
 
-  <section class="panel">
-    <div class="panel-title">02 // CHINESE TRANSLATION</div>
-    <div class="result chinese" id="chineseText">
-      等待翻译...
-    </div>
-  </section>
+  <select id="sourceLang" aria-label="Speaking language">
+    <option value="en-US">🇬🇧 English</option>
+    <option value="zh-CN">🇨🇳 Chinese</option>
+  </select>
 
-  <div class="controls">
-    <button class="mic-button" id="micButton" aria-label="Start microphone">🎙</button>
-  </div>
+  <button class="swap" id="swapBtn" title="Swap languages">⇄</button>
 
-  <div class="controls">
-    <button id="startButton">START CONVERSATION</button>
-    <button id="stopButton" class="secondary">STOP</button>
-    <button id="replayButton" class="secondary">▶ REPLAY</button>
-  </div>
+  <select id="targetLang" aria-label="Translation language">
+    <option value="zh-CN">🇨🇳 Chinese</option>
+    <option value="en-US">🇬🇧 English</option>
+  </select>
+
+  <select id="voiceSelect" aria-label="Agent voice">
+    <option value="">Agent Voice</option>
+  </select>
+
+</div>
+
+<div class="translations">
 
   <section class="panel">
-    <div class="panel-title">03 // MANUAL TRANSLATION</div>
-    <div class="input-area">
-      <input
-        id="manualInput"
-        type="text"
-        placeholder="Type English text here..."
-      >
-      <button id="translateButton">TRANSLATE</button>
-    </div>
+    <div class="panel-title" id="sourceTitle">🎙 ENGLISH</div>
+    <div class="output" id="sourceOutput"></div>
   </section>
 
-  <p class="small-note">
-    Speak in English. The system translates and speaks in Chinese.
-  </p>
+  <section class="panel">
+    <div class="panel-title" id="targetTitle">✦ CHINESE</div>
+    <div class="output" id="targetOutput"></div>
+  </section>
 
-  <footer class="footer">
-    V//TRANSLATE — COMMUNICATION PROTOCOL
-  </footer>
+</div>
+
+<div class="controls">
+
+  <div>
+    <button class="circle" id="startBtn" title="Start conversation">▶</button>
+    <div class="button-label">START</div>
+  </div>
+
+  <div>
+    <button class="circle" id="micBtn" title="Start listening">🎙</button>
+    <div class="button-label">MIC</div>
+  </div>
+
+  <div>
+    <button class="circle" id="stopBtn" title="Stop conversation">■</button>
+    <div class="button-label">STOP</div>
+  </div>
+
+  <div>
+    <button class="circle" id="replayBtn" title="Replay translation">↻</button>
+    <div class="button-label">REPLAY</div>
+  </div>
+
+</div>
+
+<div class="status" id="status">READY</div>
 
 </div>
 
 <script>
+const sourceLang = document.getElementById("sourceLang");
+const targetLang = document.getElementById("targetLang");
+const voiceSelect = document.getElementById("voiceSelect");
+
+const sourceOutput = document.getElementById("sourceOutput");
+const targetOutput = document.getElementById("targetOutput");
+const sourceTitle = document.getElementById("sourceTitle");
+const targetTitle = document.getElementById("targetTitle");
+const statusText = document.getElementById("status");
+
+const startBtn = document.getElementById("startBtn");
+const micBtn = document.getElementById("micBtn");
+const stopBtn = document.getElementById("stopBtn");
+const replayBtn = document.getElementById("replayBtn");
+const swapBtn = document.getElementById("swapBtn");
+
 const SpeechRecognition =
   window.SpeechRecognition || window.webkitSpeechRecognition;
 
-const englishText = document.getElementById("englishText");
-const chineseText = document.getElementById("chineseText");
-const statusBox = document.getElementById("status");
-const statusText = document.getElementById("statusText");
-
-const micButton = document.getElementById("micButton");
-const startButton = document.getElementById("startButton");
-const stopButton = document.getElementById("stopButton");
-const replayButton = document.getElementById("replayButton");
-const translateButton = document.getElementById("translateButton");
-const manualInput = document.getElementById("manualInput");
-
-let recognition;
+let recognition = null;
 let autoMode = false;
-let isRecognizing = false;
-let isProcessing = false;
-let isSpeaking = false;
+let listening = false;
+let processing = false;
+let speaking = false;
 let restartTimer = null;
-let lastChinese = "";
-let recognitionUnavailable = false;
+let lastTranslation = "";
+let voices = [];
+let sessionId = 0;
 
-function setStatus(message, active = false) {
-  statusText.textContent = message;
-  statusBox.classList.toggle("active", active);
+function sourceName() {
+  return sourceLang.value === "en-US" ? "ENGLISH" : "CHINESE";
 }
 
-function clearRestartTimer() {
-  if (restartTimer) {
-    clearTimeout(restartTimer);
-    restartTimer = null;
+function targetName() {
+  return targetLang.value === "en-US" ? "ENGLISH" : "CHINESE";
+}
+
+function updateLabels() {
+  sourceTitle.textContent = "🎙 " + sourceName();
+  targetTitle.textContent = "✦ " + targetName();
+  loadVoices();
+}
+
+function setStatus(message) {
+  statusText.textContent = message;
+}
+
+swapBtn.addEventListener("click", () => {
+  const oldSource = sourceLang.value;
+  sourceLang.value = targetLang.value;
+  targetLang.value = oldSource;
+  updateLabels();
+
+  if (autoMode) {
+    stopConversation();
+    startConversation();
   }
+});
+
+sourceLang.addEventListener("change", () => {
+  if (sourceLang.value === targetLang.value) {
+    targetLang.value = sourceLang.value === "en-US" ? "zh-CN" : "en-US";
+  }
+  updateLabels();
+});
+
+targetLang.addEventListener("change", () => {
+  if (sourceLang.value === targetLang.value) {
+    sourceLang.value = targetLang.value === "en-US" ? "zh-CN" : "en-US";
+  }
+  updateLabels();
+});
+
+function loadVoices() {
+  if (!("speechSynthesis" in window)) return;
+
+  voices = speechSynthesis.getVoices();
+  const language = targetLang.value.split("-")[0];
+
+  const matching = voices.filter(v =>
+    v.lang.toLowerCase().startsWith(language.toLowerCase())
+  );
+
+  voiceSelect.innerHTML = "";
+
+  const automatic = document.createElement("option");
+  automatic.value = "";
+  automatic.textContent = "Agent Voice · Auto";
+  voiceSelect.appendChild(automatic);
+
+  matching.forEach((voice, index) => {
+    const option = document.createElement("option");
+    option.value = String(index);
+    option.textContent = voice.name;
+    voiceSelect.appendChild(option);
+  });
+}
+
+if ("speechSynthesis" in window) {
+  speechSynthesis.onvoiceschanged = loadVoices;
+  loadVoices();
+}
+
+function getSelectedVoice() {
+  const language = targetLang.value.split("-")[0];
+  const matching = voices.filter(v =>
+    v.lang.toLowerCase().startsWith(language.toLowerCase())
+  );
+
+  if (voiceSelect.value !== "") {
+    return matching[Number(voiceSelect.value)] || null;
+  }
+
+  return matching[0] || null;
 }
 
 function createRecognition() {
   if (!SpeechRecognition) {
-    recognitionUnavailable = true;
     setStatus("SPEECH RECOGNITION NOT SUPPORTED");
-    micButton.disabled = true;
-    startButton.disabled = true;
-    return;
+    return null;
   }
 
-  recognition = new SpeechRecognition();
-  recognition.lang = "en-US";
-  recognition.continuous = false;
-  recognition.interimResults = false;
-  recognition.maxAlternatives = 1;
+  const rec = new SpeechRecognition();
+  rec.lang = sourceLang.value;
+  rec.continuous = false;
+  rec.interimResults = true;
+  rec.maxAlternatives = 1;
 
-  recognition.onstart = () => {
-    isRecognizing = true;
-    micButton.classList.add("listening");
-    setStatus("LISTENING FOR ENGLISH...", true);
+  rec.onstart = () => {
+    listening = true;
+    micBtn.classList.add("active");
+    setStatus("LISTENING...");
   };
 
-  recognition.onresult = async (event) => {
-    const spokenText = event.results[0][0].transcript.trim();
+  rec.onresult = async (event) => {
+    let finalText = "";
+    let interimText = "";
 
-    if (!spokenText) return;
+    for (let i = event.resultIndex; i < event.results.length; i++) {
+      const text = event.results[i][0].transcript;
 
-    englishText.textContent = spokenText;
-    isProcessing = true;
-    await translateAndSpeak(spokenText);
+      if (event.results[i].isFinal) {
+        finalText += text;
+      } else {
+        interimText += text;
+      }
+    }
+
+    if (interimText) {
+      sourceOutput.textContent = interimText;
+    }
+
+    if (finalText.trim()) {
+      sourceOutput.textContent = finalText.trim();
+      await translateText(finalText.trim());
+    }
   };
 
-  recognition.onerror = (event) => {
-    console.error("Recognition error:", event.error);
-
+  rec.onerror = (event) => {
     if (event.error === "not-allowed" ||
         event.error === "service-not-allowed") {
       autoMode = false;
-      setStatus("MICROPHONE PERMISSION DENIED");
-    } else if (event.error === "no-speech") {
-      setStatus("NO SPEECH DETECTED");
-    } else if (event.error !== "aborted") {
-      setStatus("MICROPHONE ERROR: " + event.error);
+      setStatus("MICROPHONE PERMISSION REQUIRED");
+    } else if (event.error !== "no-speech" &&
+               event.error !== "aborted") {
+      setStatus("MICROPHONE ERROR");
     }
   };
 
-  recognition.onend = () => {
-    isRecognizing = false;
-    micButton.classList.remove("listening");
+  rec.onend = () => {
+    listening = false;
+    micBtn.classList.remove("active");
 
-    if (autoMode && !isProcessing && !isSpeaking) {
-      scheduleListening(700);
-    } else if (!autoMode && !isSpeaking && !isProcessing) {
-      setStatus("SYSTEM STANDBY");
+    if (autoMode && !processing && !speaking) {
+      scheduleRestart();
     }
   };
+
+  return rec;
 }
 
 function startListening() {
-  if (!recognition || recognitionUnavailable ||
-      !autoMode || isRecognizing || isProcessing || isSpeaking) {
-    return;
-  }
+  if (!autoMode || listening || processing || speaking) return;
 
-  clearRestartTimer();
+  clearTimeout(restartTimer);
 
   try {
-    recognition.start();
+    recognition = createRecognition();
+    if (recognition) recognition.start();
   } catch (error) {
-    console.log("Recognition start:", error.message);
-    scheduleListening(1200);
+    scheduleRestart();
   }
 }
 
-function scheduleListening(delay = 700) {
-  clearRestartTimer();
+function scheduleRestart() {
+  clearTimeout(restartTimer);
 
   if (!autoMode) return;
 
   restartTimer = setTimeout(() => {
-    startListening();
-  }, delay);
-}
-
-function stopListening() {
-  clearRestartTimer();
-
-  if (recognition && isRecognizing) {
-    try {
-      recognition.stop();
-    } catch (error) {
-      console.log(error);
+    if (autoMode && !listening && !processing && !speaking) {
+      startListening();
     }
-  }
+  }, 700);
 }
 
 async function translateText(text) {
-  const encoded = encodeURIComponent(text);
+  if (processing) return;
+
+  processing = true;
+  const currentSession = sessionId;
+  setStatus("TRANSLATING...");
 
   try {
-    const url =
-      "https://translate.googleapis.com/translate_a/single" +
-      "?client=gtx&sl=en&tl=zh-CN&dt=t&q=" + encoded;
+    const from = sourceLang.value.startsWith("en") ? "en" : "zh-CN";
+    const to = targetLang.value.startsWith("en") ? "en" : "zh-CN";
 
-    const response = await fetch(url);
+    let translated = "";
 
-    if (!response.ok) throw new Error("Google translation failed");
+    try {
+      const url =
+        "https://translate.googleapis.com/translate_a/single?client=gtx&sl=" +
+        encodeURIComponent(from) +
+        "&tl=" + encodeURIComponent(to) +
+        "&dt=t&q=" + encodeURIComponent(text);
 
-    const data = await response.json();
+      const response = await fetch(url);
+      if (!response.ok) throw new Error("Translation failed");
 
-    const translated = data[0]
-      .map(item => item[0])
-      .filter(Boolean)
-      .join("");
+      const data = await response.json();
+      translated = data[0].map(item => item[0] || "").join("");
+    } catch (error) {
+      const backup =
+        "https://api.mymemory.translated.net/get?q=" +
+        encodeURIComponent(text) +
+        "&langpair=" + encodeURIComponent(from + "|" + to);
 
-    if (!translated) throw new Error("Empty translation");
+      const response = await fetch(backup);
+      const data = await response.json();
 
-    return translated;
+      if (data.responseStatus !== 200) {
+        throw new Error("No translation available");
+      }
 
-  } catch (googleError) {
-    console.log("Using fallback translation:", googleError);
-
-    const fallback =
-      "https://api.mymemory.translated.net/get?q=" +
-      encoded + "&langpair=en|zh-CN";
-
-    const response = await fetch(fallback);
-
-    if (!response.ok) throw new Error("Translation service unavailable");
-
-    const data = await response.json();
-    const translated = data.responseData?.translatedText;
-
-    if (!translated) throw new Error("Translation failed");
-
-    return translated;
-  }
-}
-
-function getChineseVoice() {
-  const voices = speechSynthesis.getVoices();
-
-  return voices.find(voice =>
-    voice.lang.toLowerCase() === "zh-cn"
-  ) || voices.find(voice =>
-    voice.lang.toLowerCase().startsWith("zh")
-  ) || null;
-}
-
-function speakChinese(text) {
-  return new Promise((resolve, reject) => {
-    if (!("speechSynthesis" in window)) {
-      reject(new Error("Speech synthesis is not supported"));
-      return;
+      translated = data.responseData.translatedText;
     }
 
-    speechSynthesis.cancel();
+    if (currentSession !== sessionId) return;
 
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = "zh-CN";
-    utterance.rate = 0.9;
-    utterance.pitch = 1;
-
-    const voice = getChineseVoice();
-
-    if (voice) {
-      utterance.voice = voice;
-    }
-
-    utterance.onstart = () => {
-      isSpeaking = true;
-      setStatus("SPEAKING CHINESE...", true);
-    };
-
-    utterance.onend = () => {
-      isSpeaking = false;
-      resolve();
-    };
-
-    utterance.onerror = (event) => {
-      isSpeaking = false;
-      reject(new Error(event.error || "Voice playback failed"));
-    };
-
-    speechSynthesis.speak(utterance);
-  });
-}
-
-async function translateAndSpeak(text) {
-  isProcessing = true;
-
-  // Stop microphone before speaking to prevent feedback.
-  stopListening();
-
-  try {
-    setStatus("TRANSLATING...", true);
-
-    const translated = await translateText(text);
-
-    chineseText.textContent = translated;
-    lastChinese = translated;
-
-    await speakChinese(translated);
-
-    setStatus("TRANSLATION COMPLETE");
+    lastTranslation = translated;
+    targetOutput.textContent = translated;
+    speakTranslation(translated);
 
   } catch (error) {
-    console.error(error);
-    chineseText.textContent = "翻译失败，请重试。";
-    setStatus("TRANSLATION OR VOICE ERROR");
-
+    if (currentSession === sessionId) {
+      setStatus("TRANSLATION FAILED");
+    }
   } finally {
-    isSpeaking = false;
-    isProcessing = false;
+    processing = false;
 
-    if (autoMode) {
-      scheduleListening(900);
+    if (autoMode && !speaking) {
+      scheduleRestart();
     }
   }
+}
+
+function speakTranslation(text) {
+  if (!("speechSynthesis" in window) || !text) {
+    setStatus("TRANSLATION COMPLETE");
+    return;
+  }
+
+  speechSynthesis.cancel();
+
+  const utterance = new SpeechSynthesisUtterance(text);
+  utterance.lang = targetLang.value;
+
+  const selectedVoice = getSelectedVoice();
+  if (selectedVoice) {
+    utterance.voice = selectedVoice;
+  }
+
+  utterance.rate = 1;
+  utterance.pitch = 1;
+
+  speaking = true;
+  setStatus("PLAYING TRANSLATION...");
+
+  utterance.onend = () => {
+    speaking = false;
+    setStatus(autoMode ? "LISTENING..." : "READY");
+    if (autoMode) scheduleRestart();
+  };
+
+  utterance.onerror = () => {
+    speaking = false;
+    if (autoMode) scheduleRestart();
+  };
+
+  speechSynthesis.speak(utterance);
 }
 
 function startConversation() {
-  if (recognitionUnavailable) return;
+  if (!SpeechRecognition) {
+    setStatus("USE CHROME FOR VOICE SUPPORT");
+    return;
+  }
 
   autoMode = true;
-  setStatus("ACTIVATING VOICE SYSTEM...", true);
+  sessionId++;
+  setStatus("STARTING...");
   startListening();
 }
 
 function stopConversation() {
   autoMode = false;
-  clearRestartTimer();
-  stopListening();
+  sessionId++;
+  clearTimeout(restartTimer);
+
+  if (recognition) {
+    try {
+      recognition.abort();
+    } catch (error) {}
+  }
 
   if ("speechSynthesis" in window) {
     speechSynthesis.cancel();
   }
 
-  isSpeaking = false;
-  isProcessing = false;
-  micButton.classList.remove("listening");
+  listening = false;
+  processing = false;
+  speaking = false;
 
-  setStatus("SYSTEM STOPPED");
+  micBtn.classList.remove("active");
+  setStatus("STOPPED");
 }
 
-micButton.addEventListener("click", () => {
+startBtn.addEventListener("click", startConversation);
+stopBtn.addEventListener("click", stopConversation);
+
+micBtn.addEventListener("click", () => {
   if (autoMode) {
     stopConversation();
   } else {
@@ -656,69 +701,29 @@ micButton.addEventListener("click", () => {
   }
 });
 
-startButton.addEventListener("click", startConversation);
-stopButton.addEventListener("click", stopConversation);
-
-replayButton.addEventListener("click", async () => {
-  if (!lastChinese || isSpeaking) return;
-
-  const wasAutoMode = autoMode;
-
-  // Keep the microphone off during replay.
-  stopListening();
-  isSpeaking = true;
-
-  try {
-    await speakChinese(lastChinese);
-    setStatus("REPLAY COMPLETE");
-  } catch (error) {
-    setStatus("VOICE PLAYBACK ERROR");
-  } finally {
-    isSpeaking = false;
-
-    if (wasAutoMode && autoMode) {
-      scheduleListening(900);
-    }
+replayBtn.addEventListener("click", () => {
+  if (lastTranslation) {
+    speakTranslation(lastTranslation);
+  } else {
+    setStatus("NO TRANSLATION TO REPLAY");
   }
 });
 
-translateButton.addEventListener("click", async () => {
-  const text = manualInput.value.trim();
-
-  if (!text || isProcessing || isSpeaking) return;
-
-  englishText.textContent = text;
-
-  // Manual translation does not activate conversation mode.
-  const previousAutoMode = autoMode;
-  autoMode = false;
-  clearRestartTimer();
-  stopListening();
-
-  await translateAndSpeak(text);
-
-  autoMode = previousAutoMode;
-
-  if (autoMode) {
-    scheduleListening(900);
+function createPetals() {
+  for (let i = 0; i < 14; i++) {
+    const petal = document.createElement("div");
+    petal.className = "petal";
+    petal.textContent = "✿";
+    petal.style.left = Math.random() * 100 + "vw";
+    petal.style.animationDelay = Math.random() * 9 + "s";
+    petal.style.fontSize = (10 + Math.random() * 15) + "px";
+    document.body.appendChild(petal);
   }
-});
-
-manualInput.addEventListener("keydown", (event) => {
-  if (event.key === "Enter") {
-    translateButton.click();
-  }
-});
-
-// Load installed voices.
-if ("speechSynthesis" in window) {
-  speechSynthesis.getVoices();
-  speechSynthesis.onvoiceschanged = () => {
-    speechSynthesis.getVoices();
-  };
 }
 
-createRecognition();
+createPetals();
+updateLabels();
 </script>
+
 </body>
 </html>
